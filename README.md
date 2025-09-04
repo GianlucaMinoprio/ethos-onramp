@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Ethos Onramp (Next.js + Daimo Pay)
 
-## Getting Started
+A minimal onramp checkout page built with Next.js that integrates the Daimo Pay widget. It renders a 720×720 canvas with an animated globe background, a bold deposit amount, and a large “PAY WITH CRYPTO” button. The accent color is configurable via URL params.
 
-First, run the development server:
+### Demo URL parameters
+
+- **payId (required)**: Your Daimo Pay ID. Obtain it from your Daimo Pay dashboard or test value.
+- **color (optional)**: Controls the accent color of the globe, header, and button.
+  - Presets: `Red`, `Green`, `Aqua`, `Ochre`, `Gray`
+  - Hex: `#00E4FF` or `00E4FF`
+  - Dynamic: `auto` or `dynamic` (cycles through presets every 1.5s)
+
+Examples:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Preset color
+http://localhost:3000/?payId=YOUR_PAY_ID&color=Green
+
+# Hex color
+http://localhost:3000/?payId=YOUR_PAY_ID&color=%2300E4FF
+
+# Dynamic cycling colors
+http://localhost:3000/?payId=YOUR_PAY_ID&color=auto
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Getting started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+# open http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Build and run production
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app/page.tsx`: Main deposit screen. Reads `payId` and `color` via `useSearchParams` inside a Suspense boundary. Uses `@daimo/pay` for the checkout button.
+- `src/app/Providers.tsx`: App providers and Daimo Pay theme, with accent color injection.
+- `src/app/Globe.tsx`: Animated background globe.
+- `src/app/PoweredByPayFooter.tsx`: Footer with links to Daimo Pay, Terms, and Privacy.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Customization
 
-## Deploy on Vercel
+- Adjust sizes/spacing and typography directly in `src/app/page.tsx`.
+- Update Daimo Pay theme overrides in `src/app/Providers.tsx` (`customTheme`).
+- Change globe size/position via the `Globe` component props in `src/app/page.tsx`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The deposit amount text reflects the active Daimo Pay order when available.
+- `useSearchParams` calls are wrapped in Suspense to ensure compatibility with prerendered routes (e.g., 404).
+
+### License
+
+MIT
