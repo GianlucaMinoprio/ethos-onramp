@@ -1,10 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Globe from "./Globe";
 import { DaimoPayButton, useDaimoPay } from "@daimo/pay";
 import { isHydrated } from "@daimo/pay-common";
 import type { DaimoPayOrder } from "@daimo/pay-common";
+import { PoweredByPayFooter } from "./PoweredByPayFooter";
 
 const COLOR_MAP: Record<string, string> = {
   Red: "#FE0000",
@@ -23,7 +25,7 @@ function formatUsd(amount?: number) {
   }
 }
 
-export default function Home() {
+function HomeContent() {
   const params = useSearchParams();
   const payId = params.get("payId") ?? "";
   const colorKey = params.get("color") ?? "Gray";
@@ -38,16 +40,19 @@ export default function Home() {
       <div className="relative overflow-hidden" style={{ width: 720, height: 720 }}>
         <Globe
           color={systemColor}
-          className="absolute -top-[214px] -left-[214px]"
-          style={{ width: 1148, height: 1148 }}
+          className="absolute -top-[160px] -left-[160px]"
+          style={{ width: 1040, height: 1040 }}
           opacity={0.5}
         />
 
         <div className="relative h-full w-full flex flex-col items-center justify-center gap-6">
           <div className="text-center">
-            <div className="text-white text-4xl font-normal" style={{ fontFamily: "var(--font-space-mono)" }}>Deposit</div>
+            <div className="text-white text-4xl font-normal" style={{ fontFamily: "var(--font-space-mono)", fontWeight: 900, color: systemColor }}>DEPOSIT</div>
             {amountUsd && (
-              <div className="mt-2 text-white text-2xl" style={{ fontFamily: '"Pitagon Sans", var(--font-geist-sans), sans-serif' }}>
+              <div
+                className="mt-4 text-white text-7xl font-black tracking-tight"
+                style={{ fontFamily: '"Pitagon Sans", var(--font-geist-sans), sans-serif', fontWeight: 600, letterSpacing: "0.10em" }}
+              >
                 {amountUsd}
               </div>
             )}
@@ -59,25 +64,34 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={show}
-                  className="px-6 py-3 border border-black/10"
+                  className="px-8 py-4 md:px-10 md:py-6 text-3xl md:text-3xl font-black leading-none"
                   style={{
                     backgroundColor: systemColor,
                     color: "#000",
                     fontFamily: "var(--font-space-mono)",
-                    fontWeight: 700,
-                    letterSpacing: "0.01em",
-                    borderRadius: 0,
+                    fontWeight: 900,
                   }}
                 >
-                  Pay with crypto
+                  PAY WITH CRYPTO
                 </button>
               )}
             </DaimoPayButton.Custom>
           ) : (
             <div className="text-white">Missing payId</div>
           )}
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+            <PoweredByPayFooter />
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
   );
 }

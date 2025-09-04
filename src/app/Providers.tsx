@@ -23,7 +23,7 @@ const COLOR_MAP: Record<string, string> = {
 };
 
 const BASE_THEME_WITH_PLACEHOLDERS: Record<string, string> = {
-  '--ck-font-family': 'var(--font-space-mono)',
+  '--ck-font-family': 'var(--font-roboto)',
   '--ck-font-weight': '400',
   '--ck-border-radius': '0px',
   '--ck-overlay-backdrop-filter': 'blur(0px)',
@@ -83,7 +83,7 @@ const BASE_THEME_WITH_PLACEHOLDERS: Record<string, string> = {
   '--ck-tertiary-button-active-box-shadow': '0 0 0 0 #ffffff',
   '--ck-modal-box-shadow': '0px 2px 4px 0px #00000005',
   '--ck-overlay-background': '#00000008',
-  '--ck-body-color': '{systemColor}',
+  '--ck-body-color': '#ffffff',
   '--ck-body-color-muted': '#ffffff',
   '--ck-body-color-muted-hover': '{systemColor}',
   '--ck-body-background': '#000000',
