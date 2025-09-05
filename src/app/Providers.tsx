@@ -81,7 +81,7 @@ const BASE_THEME_WITH_PLACEHOLDERS: Record<string, string> = {
   '--ck-tertiary-button-active-color': '#373737',
   '--ck-tertiary-button-active-background': '#F6F7F9',
   '--ck-tertiary-button-active-box-shadow': '0 0 0 0 #ffffff',
-  '--ck-modal-box-shadow': '0px 2px 4px 0px #00000005',
+  '--ck-modal-box-shadow': '0px 0px 0px 3px {systemColor}',
   '--ck-overlay-background': '#00000008',
   '--ck-body-color': '#ffffff',
   '--ck-body-color-muted': '#ffffff',
